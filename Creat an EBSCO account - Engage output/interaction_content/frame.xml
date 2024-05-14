@@ -47,6 +47,7 @@
           <option name="tooltips" value="true" />
           <option name="autocollapse" value="true" />
           <option name="autonumber" value="true" />
+          <option name="enableresultsicons" value="false" />
         </options>
       </optiongroup>
       <optiongroup name="controls">
@@ -61,7 +62,7 @@
           <option name="pauseplay" value="false" />
           <option name="search" value="false" />
           <option name="enableKeyboardShortcuts" value="true" />
-          <option name="closed_captions" value="false">
+          <option name="closed_captions" value="true">
             <options>
               <option name="font" value="Open Sans" />
             </options>
