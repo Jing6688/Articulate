@@ -1,11 +1,11 @@
-
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
+/* Body Styling */
 body {
     font-family: 'Arial, sans-serif';
     line-height: 1.6;
@@ -13,7 +13,7 @@ body {
     color: #333;
 }
 
-
+/* Container */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -21,7 +21,7 @@ body {
     overflow: hidden;
 }
 
-
+/* Header */
 header {
     background: #333;
     color: #fff;
@@ -60,7 +60,7 @@ header nav {
     margin-top: 10px;
 }
 
-
+/* Showcase */
 #showcase {
     background: url('showcase.jpg') no-repeat 0 -400px;
     background-size: cover;
@@ -80,7 +80,7 @@ header nav {
     font-size: 20px;
 }
 
-
+/* Main content */
 main {
     padding: 20px 0;
 }
@@ -119,7 +119,7 @@ footer {
     margin-top: 30px;
 }
 
-
+/* Media Queries */
 @media (max-width: 768px) {
     header #branding,
     header nav,
