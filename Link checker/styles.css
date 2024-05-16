@@ -23,7 +23,7 @@ body {
 
 /* Header */
 header {
-    background: #333;
+    background: #202e52;
     color: #32a852;
     padding-top: 30px;
     min-height: 70px;
@@ -87,7 +87,7 @@ main {
 
 /* Main Card */
 .main-card {
-    background: #c1dff5; 
+    background: #202e52; 
     color: #fff;
     padding: 20px;
     margin-bottom: 20px;
