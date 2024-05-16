@@ -23,15 +23,15 @@ body {
 
 /* Header */
 header {
-    background: #202e52;
-    color: #32a852;
+    background: #1e264a;
+    color: #88e655;
     padding-top: 30px;
     min-height: 70px;
     border-bottom: #0779e4 3px solid;
 }
 
 header a {
-    color: #32a852;
+    color: #88e655;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 16px;
@@ -87,7 +87,7 @@ main {
 
 /* Main Card */
 .main-card {
-    background: #202e52; 
+    background: #1e264a; 
     color: #fff;
     padding: 20px;
     margin-bottom: 20px;
@@ -119,11 +119,12 @@ main {
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
+    margin-bottom: 75px;
 }
 
 /* Footer */
 footer {
-    background: #333;
+    background: #1e264a;
     color: #fff;
     text-align: center;
     padding: 30px 0;
