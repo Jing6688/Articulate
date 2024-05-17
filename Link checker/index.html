@@ -32,6 +32,7 @@
             border: none;
             outline: none;
             transition: 0.4s;
+            margin-bottom: 10px;
         }
         .active, .accordion:hover {
             background-color: #ccc;
@@ -74,6 +75,57 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /* Centered Button */
+        .center-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Common Button Style */
+        .button {
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+        /* Form Container */
+        .form-container {
+            bottom: 20px;
+            direction: rtl;
+            padding: 20px;
+        }
+
+        /* Form Button Style */
+        #myForm button {
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+ #feedbackForm button {
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
+           Background-color: #1e264a;
+            color: white; /* Text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+#feedback padding: {15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
+}
     </style>
 </head>
 <body>
@@ -102,35 +154,35 @@
         </div>
     </section>
 
-   
-
     <!-- Main Content -->
 
-<!-- Accordion -->
-        <button class="accordion">Section 1</button>
-        <div class="panel">
-            <p>Content for section 1.</p>
+    <!-- Accordion -->
+    <button class="accordion button">Link Check Section 1</button>
+    <div class="panel">
+        <p>Content for section 1.</p>
+    </div>
+
+    <button class="accordion button">Link Check Section 2</button>
+    <div class="panel">
+        <p>Content for section 2.</p>
+    </div>
+
+    <br>
+
+    <!-- Centered Modal Button -->
+    <div class="center-button">
+        <button id="openModal" class="button">Open Modal</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
         </div>
+    </div>
 
-        <button class="accordion">Section 2</button>
-        <div class="panel">
-            <p>Content for section 2.</p>
-        </div>
-
-        <!-- Modal Button -->
-        <button id="openModal">Open Modal</button>
-
-        <!-- Modal -->
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Some text in the Modal..</p>
-            </div>
-        </div>
-
- 
-  
-<main class="container">
+    <main class="container">
         <section class="grid-3">
             <div class="card">
                 <h2>Card 1</h2>
@@ -146,32 +198,34 @@
             </div>
         </section>
 
-        
-   <!-- Carousel -->
-    <div class="carousel">
-        <img class="carousel-image" src="image1.jpg" alt="Image 1">
-        <img class="carousel-image" src="image2.jpg" alt="Image 2">
-        <img class="carousel-image" src="image3.jpg" alt="Image 3">
-        <button onclick="prevImage()">Previous</button>
-        <button onclick="nextImage()">Next</button>
-    </div>      
+        <!-- Carousel -->
+        <div class="carousel">
+            <img class="carousel-image" src="image1.jpg" alt="Image 1">
+            <img class="carousel-image" src="image2.jpg" alt="Image 2">
+            <img class="carousel-image" src="image3.jpg" alt="Image 3">
+
+            <button onclick="prevImage()" class="button" style="padding: 8px 8px; font-size: 14px;">Previous</button>
+            <button onclick="nextImage()" class="button" style="padding: 8px 8px; font-size: 14px;">Next</button>
+        </div>
 
         <!-- Main Card -->
         <div class="main-card">
             <h2>Check links Here</h2>
             <p></p>
         </div>
+    </main>
 
- <!-- Form -->
-        <form id="myForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
-            <span id="emailError" style="color:red;display:none;">Invalid email address</span>
-            <br><br>
-            <button type="submit">Submit</button>
+    <!-- Form -->
+    <div class="form-container">
+        <form id="feedbackForm">
+            
+            <button type="submit">Submit Feedback</button>
+            <textarea id="feedback" name="feedback" rows="10"></textarea>
+
+            
         </form>
-    </main>       
-        
+    </div>
+    
     <!-- Footer -->
     <footer>
         <p>My Website &copy; 2024</p>
@@ -255,11 +309,8 @@
             } else {
                 emailError.style.display = 'none';
             }
+       
         });
     </script>
 </body>
 </html>
-
-
-
-
