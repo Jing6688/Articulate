@@ -7,9 +7,9 @@
 
 /* Body Styling */
 body {
-    font-family: 'Arial, sans-serif';
+    font-family: 'Tahoma';
     line-height: 1.6;
-    background-color: #f4f4f4;
+    background-color: #E6E3DC;
     color: #333;
 }
 
@@ -23,15 +23,15 @@ body {
 
 /* Header */
 header {
-    background: #1e264a;
-    color: #88e655;
+    background: #E6E3DC;
+    color: #666699;
     padding-top: 30px;
     min-height: 70px;
-    border-bottom: #0779e4 3px solid;
+    border-bottom: #666699 3px solid;
 }
 
 header a {
-    color: #88e655;
+    color: #666699;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 16px;
@@ -87,7 +87,7 @@ main {
 
 /* Main Card */
 .main-card {
-    background: #1e264a; 
+    background: #666699; 
     color: #fff;
     padding: 20px;
     margin-bottom: 20px;
@@ -124,7 +124,7 @@ main {
 
 /* Footer */
 footer {
-    background: #1e264a;
+    background: #666699;
     color: #fff;
     text-align: center;
     padding: 30px 0;
