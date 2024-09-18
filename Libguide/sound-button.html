@@ -4,30 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Play Button</title>
-    <!-- Include Font Awesome CDN -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        /* Style the button */
+        /* Style for the image button */
         .play-btn {
-            font-size: 50px;
-            color: #007bff;
+            width: 100px;
+            height: auto;
             cursor: pointer;
             border: none;
             background: none;
             outline: none;
         }
-        .play-btn:hover {
-            color: #0056b3;
-        }
     </style>
 </head>
 <body>
 
-<h1>Click the Icon to Play the Sound</h1>
 
-<!-- Custom play button (using Font Awesome icon) -->
+<!-- Custom play button (using an image) -->
 <button class="play-btn" onclick="playAudio()">
-    <i class="fas fa-play-circle"></i>
+    <img src="listen-sound.png" alt="Play" width="50">
 </button>
 
 <!-- Audio element -->
@@ -40,7 +34,7 @@
   // Function to play the audio when the button is clicked
   function playAudio() {
     var audio = document.getElementById('myAudio');
-    audio.play();  // Plays the audio directly in the current page
+    audio.play();
   }
 </script>
 
