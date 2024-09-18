@@ -3,23 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autoplay Sound in HTML</title>
+    <title>Custom Play Button</title>
+    <!-- Include Font Awesome CDN -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* Style the button */
+        .play-btn {
+            font-size: 50px;
+            color: #007bff;
+            cursor: pointer;
+            border: none;
+            background: none;
+            outline: none;
+        }
+        .play-btn:hover {
+            color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Autoplay a Sound Once</h1>
+<!-- Custom play button (using Font Awesome icon) -->
+<button class="play-btn" onclick="playAudio()">
+    <i class="fas fa-play-circle"></i>
+</button>
 
-<!-- Audio element with autoplay -->
-<audio id="myAudio" autoplay>
-  <source src="Referencing Style, What Is It.mp3" type="audio/mpeg">
+<!-- Audio element -->
+<audio id="myAudio">
+  <source src="soundfile.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 
 <script>
-  // Ensures the audio plays only once by removing the autoplay attribute after it ends
-  document.getElementById('myAudio').onended = function() {
-    this.removeAttribute('autoplay');
-  };
+  // Function to play the audio when the button is clicked
+  function playAudio() {
+    var audio = document.getElementById('myAudio');
+    audio.play();
+  }
 </script>
 
 </body>
