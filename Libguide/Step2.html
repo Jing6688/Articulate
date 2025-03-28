@@ -1,4 +1,4 @@
-<video autoplay muted playsinline style="width: 100%; height: auto;">
+<video id="myVideo" autoplay muted playsinline style="width: 100%; height: auto;">
     <source src="Step2.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
@@ -6,7 +6,51 @@
 <script>
     var video = document.getElementById('myVideo');
     
+    // Existing event listener to pause on end
     video.addEventListener('ended', function() {
         video.pause();  // Stops the video from looping or restarting
     });
+
+    // New listener for replay message from parent
+    window.addEventListener('message', function(event) {
+        if (event.data === 'replayVideo') {
+            video.currentTime = 0; // Reset to start
+            video.play(); // Play the video
+        }
+    });
 </script>
+
+Key Changes:
+Parent Page:
+The button is named "Toggle Full Screen Replay".
+
+The toggleFullScreenReplay() function toggles full-screen and sends a replayVideo message to the iframe using postMessage.
+
+Step2.html:
+Added id="myVideo" to the <video> tag so it can be referenced in the script.
+
+Kept your existing ended event listener to pause the video when it finishes.
+
+Added a message event listener that checks for the replayVideo message, resets the video to the start (currentTime = 0), and plays it.
+
+How It Works:
+When you click "Toggle Full Screen Replay":
+The parent page toggles the full-screen mode of the videoContainer.
+
+It sends a replayVideo message to the iframe.
+
+Inside Step2.html, the script catches the message, resets the video to the beginning, and starts playback.
+
+Notes:
+The sandbox="allow-scripts allow-same-origin" attribute on the iframe ensures scripts can run and communication is possible.
+
+Since your video has autoplay muted playsinline, it should work smoothly in most browsers, and the replay will override the pause-on-end behavior when triggered.
+
+Test this in your environment to ensure the video restarts as expected.
+
+Let me know if you run into any issues or need further refinements!
+
+learn about postMessage
+
+video streaming protocols
+
