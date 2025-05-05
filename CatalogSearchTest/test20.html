@@ -1,0 +1,586 @@
+<link href="/opac-tmpl/lib/fontawesome/css/fontawesome.min_24.1103000.css" rel="stylesheet" /><link href="/opac-tmpl/lib/fontawesome/css/brands.min_24.1103000.css" rel="stylesheet" /><link href="/opac-tmpl/lib/fontawesome/css/solid.min_24.1103000.css" rel="stylesheet" />
+<div class="container-fluid">
+<div class="row">
+<div class="col">
+<div id="opac-main-search" class="mastheadsearch"><!-- Tab navigation -->
+<ul class="nav nav-tabs" id="searchTabs" role="tablist">
+<li class="nav-item" role="presentation"><button class="nav-link active" id="discovery-tab" data-bs-toggle="tab" data-bs-target="#discovery" type="button" role="tab" aria-controls="discovery" aria-selected="true">Discovery Search</button></li>
+<li class="nav-item" role="presentation"><button class="nav-link" id="catalog-tab" data-bs-toggle="tab" data-bs-target="#catalog" type="button" role="tab" aria-controls="catalog" aria-selected="false">Catalogue Search</button></li>
+</ul>
+<!-- Tab content -->
+<div class="tab-content" id="searchTabContent"><!-- First tab (Discovery Search) -->
+<div class="tab-pane fade show active" id="discovery" role="tabpanel" aria-labelledby="discovery-tab"><form method="get" action="/cgi-bin/koha/opac-search.pl">
+<div class="row gx-2 p-3">
+<div class="col-sm-auto order-2 order-sm-2 dropdown-container"><label for="masthead_search" class="visually-hidden">Search the catalogue by:</label><select name="idx" id="masthead_search" class="form-select">
+<option value="" data-placeholder="Search the catalogue by keyword">Library catalogue</option>
+<option value="ti" data-placeholder="Search the catalogue by title">Title</option>
+<option value="au" data-placeholder="Search the catalogue by author">Author</option>
+<option value="su" data-placeholder="Search the catalogue by subject">Subject</option>
+<option value="nb" data-placeholder="Search the catalogue by ISBN">ISBN</option>
+<option value="ns" data-placeholder="Search the catalogue by ISSN">ISSN</option>
+<option value="se" data-placeholder="Search the catalogue by series">Series</option>
+<option value="callnum" data-placeholder="Search the catalogue by call number">Call number</option>
+</select></div>
+<div class="col order-4 order-sm-3"><label for="translControl1" class="visually-hidden">Search books, eBooks, and articles</label> <input type="text" class="transl1 form-control" id="translControl1" name="q" value="" placeholder="Search books, eBooks, and articles" /> <span id="translControl"></span></div>
+<div class="order-5 col-sm-auto"><button type="submit" id="searchsubmit" class="btn btn-primary search-btn" title="Search" aria-label="Search"> <i class="fa fa-search" aria-hidden="true"></i></button></div>
+</div>
+<input type="hidden" name="weight_search" value="1" /></form></div>
+<!-- Second tab (Catalogue Search) -->
+<div class="tab-pane fade" id="catalog" role="tabpanel" aria-labelledby="catalog-tab"><form method="get" action="/cgi-bin/koha/opac-search.pl">
+<div class="row gx-2 p-3">
+<div class="col-sm-auto order-2 order-sm-2 dropdown-container"><label for="masthead_search" class="visually-hidden">Search the catalogue by:</label><select name="idx" id="masthead_search" class="form-select">
+<option value="" data-placeholder="Search the catalogue by keyword">Library catalogue</option>
+<option value="ti" data-placeholder="Search the catalogue by title">Title</option>
+<option value="au" data-placeholder="Search the catalogue by author">Author</option>
+<option value="su" data-placeholder="Search the catalogue by subject">Subject</option>
+<option value="nb" data-placeholder="Search the catalogue by ISBN">ISBN</option>
+<option value="ns" data-placeholder="Search the catalogue by ISSN">ISSN</option>
+<option value="se" data-placeholder="Search the catalogue by series">Series</option>
+<option value="callnum" data-placeholder="Search the catalogue by call number">Call number</option>
+</select></div>
+<div class="col order-4 order-sm-3"><label for="translControl1" class="visually-hidden">Search the catalogue by keyword</label> <input type="text" class="transl1 form-control" id="translControl1" name="q" value="" placeholder="Search the catalogue by keyword" /> <span id="translControl"></span></div>
+<div class="order-5 col-sm-auto"><button type="submit" id="searchsubmit" class="btn btn-primary search-btn" title="Search" aria-label="Search"> <i class="fa fa-search search-icon" aria-hidden="true"></i> </button></div>
+</div>
+<input type="hidden" name="weight_search" value="1" /></form></div>
+</div>
+<!-- Links inside the search box -->
+<div class="row p-1">
+<ul class="nav justify-content-center" id="moresearches">
+<li class="nav-item"><a href="/cgi-bin/koha/opac-search.pl">Advanced search</a></li>
+<!--<li class="nav-item separator"> | </li>-->
+<li class="nav-item"><a href="/cgi-bin/koha/opac-authorities-home.pl">Authority search</a></li>
+<!--<li class="nav-item separator"> | </li>-->
+<li class="nav-item"><a id="library_page" href="/cgi-bin/koha/opac-library.pl"> <span>Libraries</span> </a></li>
+<li class="nav-item"><a href="https://kinderlibrary.libguides.com/using-catalogue">Catalogue help</a></li>
+</ul>
+</div>
+</div>
+<!-- /#opac-main-search --></div>
+<!-- /.col --></div>
+<!-- /.row --></div>
+<!-- /.container-fluid -->
+<script>
+    // Existing JavaScript for loading new orders (unchanged)
+    if($('#new_orders').length) {
+        $.get("/files/kinder/books.html", function(data){
+            document.getElementById("new_orders").innerHTML = data;
+        });
+    }
+
+    // EDS settings
+    var edsSettings = {
+        "EDS Dropdown Text": "Discovery",
+        "EDS URL": "https://search.ebscohost.com/login.aspx?authtype=ip,guest&custid=s8207384&groupid=main&profile=eds20",
+        "EDS Default": true
+    };
+
+    // Add the "Discovery" option to the dropdown and handle form submission
+    var selectE, selectL = "beforeEnd";
+    if (edsSettings["EDS Default"]) {
+        selectL = "afterBegin";
+    }
+    if (document.querySelector("#searchform")) {
+        selectE = document.querySelector("#searchform select[name='idx']");
+        if (selectE) {
+            selectE.insertAdjacentHTML(selectL, '<option value="_eds">' + edsSettings["EDS Dropdown Text"] + '</option>');
+            if (document.querySelector("body#opac-main")) {
+                selectE.value = "_eds"; // Set default to Discovery
+            }
+        }
+        document.querySelector("#searchform").onsubmit = function(e) {
+            // Check if the "Discovery Search" tab is active to determine the search type
+            var isDiscoveryTabActive = document.querySelector("#discovery-tab").classList.contains("active");
+            if (isDiscoveryTabActive || (selectE && selectE.value === "_eds")) {
+                e.preventDefault();
+                window.location = edsSettings["EDS URL"] + "&direct=true&bquery=" + encodeURIComponent(document.querySelector("#searchform input[name='q']").value);
+            }
+        };
+    }
+
+    // Handle tab switching
+    document.getElementById("discovery-tab").addEventListener("click", function() {
+        // Hide the dropdown
+        document.querySelector(".dropdown-container").style.display = "none";
+        // Update placeholder text for Discovery Search
+        document.querySelector("#translControl1").placeholder = "Search books, eBooks, and articles";
+    });
+
+    document.getElementById("catalog-tab").addEventListener("click", function() {
+        // Show the dropdown
+        document.querySelector(".dropdown-container").style.display = "block";
+        // Update placeholder text for Catalogue Search
+        document.querySelector("#translControl1").placeholder = "Search the catalogue by keyword";
+        // Set dropdown to default value if it exists
+        if (selectE) {
+            selectE.value = "";
+        }
+    });
+
+    // Initialize the dropdown visibility based on the active tab
+    window.addEventListener("load", function() {
+        if (document.querySelector("#discovery-tab").classList.contains("active")) {
+            document.querySelector(".dropdown-container").style.display = "none";
+        } else {
+            document.querySelector(".dropdown-container").style.display = "block";
+        }
+    });
+</script>
+<style>
+
+
+body {
+   background-color: #fff;
+   font-size: 16px;
+   line-height: 24px;
+   font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
+   color: #666666;
+}
+
+
+legend, h4, h3, h2, h1 {
+    color: #96342D;
+}
+
+legend, h5 {
+    color: #96342D;
+    margin-bottom: 0px
+}
+table {
+    font-size: 100%;
+}
+.term {
+    color: #65231e;
+    background-color: #CCCCCC;
+}
+
+input[type="checkbox"] {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    box-shadow: none;
+}
+
+a,
+a:visited {
+   color: #96342D;
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+   color: #96342D;
+    text-decoration: none;
+    border-bottom: 1px solid #96342D;
+}
+
+#search-facets a, #menu a {
+    text-decoration: none;
+    line-height: 22px
+}
+
+table.table-striped td {
+    border: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+#translControl1 {
+    border: 1px solid #fff;
+}
+
+/*
+Content area ------------------------*/
+
+#opacheader {
+    background-color: #fff;
+    margin-left: 35px;
+}
+
+.main {
+   border: 0px;
+   box-shadow: none;
+   margin-top: 20px;
+   max-width: 1400px;
+}
+
+div#opac-main-search {
+   margin-top: 0px;
+   max-width: 100%;
+   background-color: #96342D;
+}
+
+#opac-main-search label {
+  color: #FFF; 
+}
+
+.main,
+#opac-main-search {
+   max-width: 1400px;
+  margin-left: 35px;
+}
+
+.breadcrumb {
+   border-bottom: 1px solid #eee;
+   border-top: 1px solid #E5E5E5;
+   background-color: transparent;
+   border-radius: 0px;
+    margin: 10px 0px 30px 0px;
+}
+
+#opac-main .breadcrumb {
+   display: none;
+}
+
+#opacmainuserblock {
+    margin-bottom: 60px;
+}
+
+#opacmainuserblock li {
+    margin-bottom: 5px;
+}
+
+fieldset.rows:nth-of-type(1) {
+    margin-top: 0px;
+}
+
+#opacmainuserblock {
+    margin-top: 10px;
+}
+
+/*
+New titles ------------------------*/
+#new_orders {
+    margin-top: 7px;
+}
+#new_orders > b {
+    color: #2d559c;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9125rem;
+    letter-spacing: 0.3px;
+}
+#new_orders table {
+    margin-top: 10px;
+    border-top: 1px solid #E5E5E5;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#new_orders table td {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding:15px;
+    color: #fff;
+}
+#new_orders .cover {
+  float: left;
+}
+#new_orders .cover img {
+  max-height: 120px;
+} 
+.bibliocol a:nth-of-type(1) {
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/*
+Slides  ------------------------*/
+.slidecontainer.row {
+    padding-top: 30px;
+}
+.slidecontainer.row h4 {
+    margin-top: 0px;
+    margin-top: 0px;
+}
+
+/*
+Buttons ------------------------*/
+.btn.btn-primary {
+    background-color: #666666; /*--Kinder Grey--*/
+    background-image: none;
+    text-shadow: none;
+    box-shadow: none;
+}
+.btn.btn-primary:hover,
+.btn.btn-primary:active {
+    background-color: #999999; /*--Kinder Light Grey ***Hover***  --*/
+    background-image: none;
+}
+
+/*
+Login ------------------------*/
+
+.breadcrumb {
+    padding-left: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 10px 0px 30px 0px;
+}
+#login p {
+   color: #2d559c;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9125rem;
+    letter-spacing: 0.3px; 
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+/*
+Nav Left ------------------------*/
+#navigation ul li {
+   list-style-type: none;
+   list-style-position: outside;
+   padding-bottom: 10px;
+   padding-top: 10px;
+   border-bottom: 1px solid #E5E5E5;
+  }
+
+#navigation ul li:first-child {
+   border-top: 1px solid #eee;
+}
+#navigation ul {
+   margin-left: 0px;
+   max-width: 300px;
+}
+
+#opacnavbottom {
+   margin-top: 30px;
+}
+#opacnav h4 {
+    color: #2d559c;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9125rem;
+    letter-spacing: 0.3px;
+}
+#opacnav li a,
+#opacnav li a:visited {
+    color: #96342D;
+}
+#moresearches li:after {
+    color: #eee;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/*
+Footer ------------------------*/
+
+#opaccredits {
+    background-color: #46A9C5;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-top: 40px;
+    padding-bottom: 40px;    
+}
+#opaccredits a, 
+#opaccredits a:visited {
+    color: #fff;
+}
+#opaccredits .footer {
+    max-width: 1360px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#opaccredits #koha-power {
+    float: right;
+    margin-top: -20px;
+    color: #96342D; /*--Kinder Red--*/
+}
+#opaccredits #niwa-copy {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #65231e; /*--Kinder Dark Red  ***Hover***  --*/
+    color: #96342D; /*--Kinder Red--*/
+}
+
+#niwa-links a:hover,
+#koha-power a:hover {
+    border-bottom:  1px solid #96342D; /*--Kinder Red--*/
+}
+#wrap > .container-fluid:last-child {
+    display: none;
+}
+
+/* Responsive bookcover CSS */
+.row { margin: 0 -10px; margin-bottom: 20px; }
+.row:last-child { margin-bottom: 0; }
+[class*="col-"] {padding: 10px; }
+
+div.newbooks_book { width: 100%; vertical-align: top; text-align: center; width: 30%; display: inline-block; }
+div.newbooks_title{ text-align: center; margin-bottom: 3px; } 
+div.newbooks_title a { font-size: 13px; font-weight: bold !important; } 
+div.newbooks_cover { min-height: 180px; text-align: center; } 
+div.newbooks_cover img { max-width: 100%; } 
+div.newbooks_author { text-align: center;  clear: both;} 
+div.newbooks_author a { color: black; } 
+div.newbooks_author a:hover { text-decoration: none; } 
+
+.type { display: none; }
+
+#user-menu-trigger .icon-user {
+    margin-top: 13px;
+    background-position: -168px 0px;
+}
+#user-menu-trigger .caret {
+    border-bottom-color: #fff;
+    border-top-color: #fff;
+}
+
+.loggedinusername {
+ color:  #96342D;
+}
+
+#logo {
+  display: none;
+}
+
+#header-title {
+  font-size: 36px; 
+}
+/* Scope styles to #opac-main-search */
+#opac-main-search {
+    margin-left: 10%;
+    margin-right: 10%;
+    max-width: 100%;
+    background-color: #96342d;
+}
+
+#opac-main-search label {
+    color: #FFF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+ 
+
+/* Search button styling */
+#opac-main-search .search-btn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FFF;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#opac-main-search .search-icon {
+    color: #FFF;
+    font-size: 18px;
+    position: relative;
+    -webkit-text-stroke: 1px #FFF;
+    text-shadow: 0 0 2px #FFF;
+}
+
+#opac-main-search .search-btn .search-icon::before {
+    content: "\f002"; /* Font Awesome magnifying glass */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+/* Placeholder text styling */
+#opac-main-search .form-control::placeholder {
+    color: Black; /* Light grey color for placeholder */
+    opacity: 0.8; /* Slightly reduced opacity for a lighter look */
+}
+
+/* Tab content styling */
+#opac-main-search .tab-content {
+    background-color: #fff;
+    color: #96342d;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#opac-main-search .tab-content. inactive {
+    
+  background-color: #666666;
+    
+}
+
+
+/* Links styling */
+#opac-main-search #moresearches {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+#opac-main-search #moresearches .nav-item {
+    text-align: center;
+    margin: 0 10px;
+}
+
+#opac-main-search #moresearches .separator {
+    color: #FFF;
+    margin: 0 0 5px 10px;
+}
+
+#opac-main-search #moresearches a {
+    color: #FFF;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+#opac-main-search #moresearches a:hover {
+    color: #FFF;
+}
+
+/* Tab styling */
+#opac-main-search .nav-tabs {
+    border-bottom: 1px solid #FFF;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#opac-main-search .nav-tabs .nav-link {
+    margin-top: 10px;
+    color: #999999;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#opac-main-search .nav-tabs .nav-link.active {
+    margin-top: 10px;
+    color: #96342d;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#opac-main-search .nav-tabs .nav-link:hover {
+    border-color: #FFF;
+}
+
+
+
+/* Heading styling scoped to #opac-main-search */
+#opac-main-search legend,
+#opac-main-search h4,
+#opac-main-search h3,
+#opac-main-search h2,
+#opac-main-search h1 {
+    color: #d9dbb9;
+}
+
+/* Button styling for search buttons */
+#opac-main-search .btn.btn-primary {
+    background-color: #96342d; /* --Kinder Grey-- */
+    background-image: none;
+    text-shadow: none;
+    box-shadow: none;
+    border: none; /* Remove default Bootstrap border */
+}
+
+
+#opac-main-search .btn.btn-primary:hover,
+#opac-main-search .btn.btn-primary:active {
+    background-color: #96342d; /* --Kinder Light Grey ***Hover*** -- */
+    background-image: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow on hover for depth */
+}
+
+/* Dropdown container styling */
+#opac-main-search .dropdown-container {
+    display: none; /* Hidden by default (Discovery Search tab is active) */
+}
+
+</style>

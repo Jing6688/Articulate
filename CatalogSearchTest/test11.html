@@ -1,0 +1,41 @@
+<div class="container-fluid">
+ 
+ <div class="row">
+ <div class="col">
+ <div id="opac-main-search" class="mastheadsearch">
+ 
+ 
+ 
+ <div id="OpacCustomSearch">
+ 
+ <div class="default_item">
+ 
+ <div class="default_body"><div id="search_tabs" class="toptabs" style="width: 60%; margin: auto;">
+  <ul class="nav nav-tabs" id="searchtabs">
+    <li class="active" id="koha-search" aria-label="Koha Catalogue"><a class="nav-link active" data-toggle="tab" href="#koha-searchC">Catalogue</a></li>
+    <li id="discovery-search" aria-label="Discovery"><a class="nav-link" data-toggle="tab" href="#discovery-searchC">Online Resources</a></li>
+  </ul>
+  
+  <div class="tab-content">
+    
+    <div class="tab-pane" id="discovery-searchC">
+      <form target="_blank" method="get" action="https://research-ebsco-com.ezproxy.toiohomai.ac.nz/c/hfqvca/search/results" data-np-checked="1">
+        <input name="proxyApplied" value="true" type="hidden" data-np-invisible="1" data-np-checked="1" />
+        <input type="text" placeholder="Search for articles, books, ebooks and more!" class="search" name="q" data-np-checked="1" />
+        <button type="submit" id="discoverysearchsubmit" class="btn btn-primary"> <i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    
+    <div class="tab-pane in active" id="koha-searchC">
+      <form method="get" action="/cgi-bin/koha/opac-search.pl" data-np-checked="1">
+        <input type="text" placeholder="Search for books and magazines" class="search" name="q" data-np-checked="1" /> 
+        <button type="submit" id="searchsubmit" class="btn btn-primary"> <i class="fa fa-search"></i> </button>
+      </form>
+      <div class="tab-advanced-search adv-search"></div>
+    </div>
+    
+  </div>
+</div></div>
+ </div>
+ 
+ </div>
