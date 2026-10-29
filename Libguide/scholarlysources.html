@@ -1,22 +1,38 @@
-<video id="myVideo" autoplay playsinline style="width: 100%; height: auto;">
+<video id="myVideo" playsinline style="width: 100%; height: auto;" controls>
     <source src="scholarlysources.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 
 <script>
-    var video = document.getElementById('myVideo');
-    
-    // Existing event listener to pause on end
+    const video = document.getElementById('myVideo');
+
+    // Log everything useful
+    video.addEventListener('loadedmetadata', () => console.log('Metadata loaded, duration:', video.duration));
+    video.addEventListener('canplay', () => console.log('Can play'));
+    video.addEventListener('error', () => console.error('Video error:', video.error));
+
     video.addEventListener('ended', function() {
-        video.pause();  // Stops the video from looping or restarting
+        video.pause();
     });
 
-    // New listener for replay message from parent
     window.addEventListener('message', function(event) {
         if (event.data === 'replayVideo') {
-            video.currentTime = 0; // Reset to start
-            video.play(); // Play the video
+            video.currentTime = 0;
+            video.muted = false;          // or true if you want silent first
+            const playPromise = video.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => console.log('Playback started successfully'))
+                    .catch(err => console.error('Playback failed:', err.name, err.message));
+            }
         }
     });
-</script>
 
+    // Optional: try to start on first user interaction anywhere on the page
+    document.addEventListener('click', function once() {
+        video.muted = false;
+        video.play().catch(e => console.error('Click-to-play failed', e));
+        document.removeEventListener('click', once);
+    }, { once: true });
+</script>
